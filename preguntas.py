@@ -137,7 +137,11 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+    data7 = pd.read_csv('tbl0.tsv', sep = '\t')
+    data7 = data7.groupby(['_c1'])['_c2'].sum()
+    print(data7)
+    return data7
+
 
 
 def pregunta_08():
@@ -177,9 +181,8 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    import pandas as pd
     df= pd.read_csv('tbl0.tsv', sep='\t')
-    df['ano'], df['mes'],df['dia'] = df['_c3'].str.split('-', 2).str
+    df['year'], df['mes'],df['dia'] = df['_c3'].str.split('-', 2).str
     df = df.drop(['mes','dia'], axis=1)
     print(df)
     return df
@@ -212,8 +215,8 @@ def pregunta_10():
                 else:
                     empty = empty + str(let)+":"                                      
         listas.append(empty)
-    lista = pd.Series(listas, name = 'lista')
-    rta10 = pd.concat([serie , lista] , axis = 1)
+    _c1 = pd.Series(listas, name = '_c1')
+    rta10 = pd.concat([serie , _c1] , axis = 1)
     print(rta10)
 
     return rta10
@@ -249,8 +252,8 @@ def pregunta_11():
             else:
                 empty = empty + str(let)+","            
         listas.append(empty)
-    lista = pd.Series(listas, name = 'lista')
-    rta11 = pd.concat([serie , lista] , axis = 1)
+    _c4 = pd.Series(listas, name = '_c4')
+    rta11 = pd.concat([serie , _c4] , axis = 1)
     print(rta11)
     return rta11
 
@@ -270,6 +273,7 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
+    import pandas as pd 
     data12 = pd.read_csv('tbl2.tsv' , sep='\t')
     y = sorted(pd.unique(data12._c0))
     serie = pd.Series(y, name= '_c0')
@@ -284,8 +288,8 @@ def pregunta_12():
             else:
                 empty = empty + str(let) + ','
         listas.append(empty)
-    lista = pd.Series(listas, name='lista')
-    rta12 = pd.concat([serie , lista], axis=1)
+    _c5 = pd.Series(listas, name='_c5')
+    rta12 = pd.concat([serie , _c5], axis=1)
     print(rta12)
     return rta12
 

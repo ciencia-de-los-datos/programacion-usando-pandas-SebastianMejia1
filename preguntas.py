@@ -7,8 +7,8 @@ Este archivo contiene las preguntas que se van a realizar en el laboratorio.
 Utilice los archivos `tbl0.tsv`, `tbl1.tsv` y `tbl2.tsv`, para resolver las preguntas.
 
 """
-import pandas as pd
 
+import pandas as pd
 
 tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
 tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
@@ -24,8 +24,8 @@ def pregunta_01():
 
     """
     tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
-    len(tbl0)
-    return
+    rta= len(tbl0)
+    return rta
 
 
 def pregunta_02():
@@ -36,7 +36,11 @@ def pregunta_02():
     4
 
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    cols= len(tbl0.axes[1])
+    print(cols)
+    return cols
+    
 
 
 def pregunta_03():
@@ -53,7 +57,11 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+    import numpy as np
+    data3 = pd.read_csv('tbl0.tsv', sep = '\t')
+    data3 = data3.groupby(['_c1'])['_c1'].count()
+    print(data3)
+    return data3
 
 
 def pregunta_04():
@@ -68,7 +76,11 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+    data4 = pd.read_csv('tbl0.tsv', sep = '\t')
+    data4 = data4.groupby(['_c1'])['_c2'].mean()
+    print(data4)
+    return data4
+
 
 
 def pregunta_05():
@@ -85,7 +97,10 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+    data5 = pd.read_csv('tbl0.tsv', sep = '\t')
+    data5 = data5.groupby(['_c1'])['_c2'].max()
+    print(data5)
+    return data5
 
 
 def pregunta_06():
@@ -97,7 +112,16 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+    import numpy as np
+
+    data6 = pd.read_csv('tbl1.tsv', sep = '\t')
+    data6 = data6['_c4'].unique()
+    data6 = np.sort(data6)
+    j = []
+    for i in data6:
+        j.append(i.upper())
+    print(j)
+    return j
 
 
 def pregunta_07():
@@ -131,7 +155,11 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+    data8 = pd.read_csv('tbl0.tsv', sep = '\t')
+    data8.dtypes
+    data8['suma'] = data8['_c0']+ data8['_c2']
+    print(data8)  
+    return data8
 
 
 def pregunta_09():
@@ -149,8 +177,13 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
-
+    import pandas as pd
+    df= pd.read_csv('tbl0.tsv', sep='\t')
+    df['ano'], df['mes'],df['dia'] = df['_c3'].str.split('-', 2).str
+    df = df.drop(['mes','dia'], axis=1)
+    print(df)
+    return df
+    
 
 def pregunta_10():
     """
@@ -166,7 +199,24 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    data10= pd.read_csv('tbl0.tsv' , sep='\t')
+    letters = sorted(pd.unique(data10._c1))
+    serie = pd.Series(letters , name = '_c0')
+    listas = []
+    for letter in letters:
+        temp = sorted(data10[data10['_c1'] == letter]._c2)
+        empty = ""
+        for num, let in enumerate(temp):
+                if num == len(temp)-1:
+                    empty = empty + str(let)
+                else:
+                    empty = empty + str(let)+":"                                      
+        listas.append(empty)
+    lista = pd.Series(listas, name = 'lista')
+    rta10 = pd.concat([serie , lista] , axis = 1)
+    print(rta10)
+
+    return rta10
 
 
 def pregunta_11():
@@ -185,7 +235,24 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    
+    data11 = pd.read_csv('tbl1.tsv' , sep='\t')
+    x = sorted(pd.unique(data11._c0))
+    serie = pd.Series(x , name = '_c0')
+    listas = []
+    for n in x:
+        temp = sorted(data11[data11['_c0'] == n]._c4)
+        empty = ""
+        for num, let in enumerate(temp):
+            if num == len(temp)-1:
+                empty = empty + str(let)
+            else:
+                empty = empty + str(let)+","            
+        listas.append(empty)
+    lista = pd.Series(listas, name = 'lista')
+    rta11 = pd.concat([serie , lista] , axis = 1)
+    print(rta11)
+    return rta11
 
 
 def pregunta_12():
@@ -203,7 +270,24 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    data12 = pd.read_csv('tbl2.tsv' , sep='\t')
+    y = sorted(pd.unique(data12._c0))
+    serie = pd.Series(y, name= '_c0')
+    data12['x2'] =  data12['_c5a'].astype(str) +':'+ data12['_c5b'].astype(str)
+    listas = []
+    for n in y:
+        temp = sorted(data12[data12['_c0'] == n].x2)
+        empty = ''
+        for num, let in enumerate(temp):
+            if num == len(temp)-1:
+                empty = empty + str(let)
+            else:
+                empty = empty + str(let) + ','
+        listas.append(empty)
+    lista = pd.Series(listas, name='lista')
+    rta12 = pd.concat([serie , lista], axis=1)
+    print(rta12)
+    return rta12
 
 
 def pregunta_13():
@@ -220,4 +304,11 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+    datos13 = pd.read_csv('tbl0.tsv', sep = '\t')
+    datos132 = pd.read_csv('tbl2.tsv', sep = '\t')
+    rta13 = pd.merge(datos13,datos132)
+    rta13 = rta13.sort_values(by=['_c1'])
+    rta13 = rta13.groupby('_c1')['_c5b'].sum()
+    return rta13
+    
+

@@ -136,7 +136,7 @@ def test_10():
     assert preguntas.pregunta_10().equals(
         pd.DataFrame(
             {
-                "_c2": [
+                "_c1": [
                     "1:1:2:3:6:7:8:9",
                     "1:3:4:5:6:8:9",
                     "0:5:6:7:9",
@@ -144,7 +144,7 @@ def test_10():
                     "1:1:2:3:3:4:5:5:5:6:7:8:8:9",
                 ]
             },
-            index=pd.Series(["A", "B", "C", "D", "E"], name="_c1"),
+            index=pd.Series(["A", "B", "C", "D", "E"], name="_c0"),
         )
     )
 

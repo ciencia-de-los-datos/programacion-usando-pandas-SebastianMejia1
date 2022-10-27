@@ -202,6 +202,7 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
+    import pandas as pd
     data10= pd.read_csv('tbl0.tsv' , sep='\t')
     letters = sorted(pd.unique(data10._c1))
     serie = pd.Series(letters , name = '_c0')
